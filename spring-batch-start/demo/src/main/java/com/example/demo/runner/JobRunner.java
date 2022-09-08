@@ -1,4 +1,4 @@
-package com.example.demo.config;
+package com.example.demo.runner;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
@@ -16,14 +16,14 @@ import javax.annotation.Resource;
 public class JobRunner implements ApplicationRunner {
 
     private final JobLauncher jobLauncher;
-    @Resource(name = "jobInstanceJob")
-    private final Job job;
+//    @Resource(name = "jobInstanceJob")
+//    private final Job job;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
         JobParameters jobParameters = new JobParametersBuilder()
                 .addString("name", "user1")
                 .toJobParameters();
-        jobLauncher.run(job, jobParameters);
+//        jobLauncher.run(job, jobParameters);
     }
 }

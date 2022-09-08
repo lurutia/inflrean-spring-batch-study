@@ -16,7 +16,7 @@ public class DBJobConfiguration {
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
 
-    @Bean
+//    @Bean
     public Job job() {
         return jobBuilderFactory.get("jib")
                 .start(step1())
