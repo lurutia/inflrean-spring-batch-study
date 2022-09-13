@@ -11,14 +11,14 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @RequiredArgsConstructor
-public class DBJobConfiguration {
+public class JobExecutionConfiguration {
 
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
 
 //    @Bean
     public Job job() {
-        return jobBuilderFactory.get("jib")
+        return jobBuilderFactory.get("job1")
                 .start(step1())
                 .next(step2())
                 .build();
@@ -43,7 +43,8 @@ public class DBJobConfiguration {
                     System.out.println("=========================");
                     System.out.println(" >> step 2 was executed");
                     System.out.println("=========================");
-                    return RepeatStatus.FINISHED;
+                    throw new RuntimeException("step2 has failed");
+//                    return RepeatStatus.FINISHED;
                 }))
                 .build();
     }

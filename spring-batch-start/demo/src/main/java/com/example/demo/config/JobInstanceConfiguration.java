@@ -23,7 +23,7 @@ public class JobInstanceConfiguration {
                 .build();
     }
 
-    @Bean
+//    @Bean
     public Step jobInstanceStep1() {
         return stepBuilderFactory.get("step1")
                 .tasklet((stepContribution, chunkContext) -> {
@@ -32,7 +32,7 @@ public class JobInstanceConfiguration {
                 .build();
     }
 
-    @Bean
+//    @Bean
     public Step jobInstanceStep2() {
         return stepBuilderFactory.get("step1")
                 .tasklet((stepContribution, chunkContext) -> {

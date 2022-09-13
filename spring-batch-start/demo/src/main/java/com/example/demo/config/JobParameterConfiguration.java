@@ -19,7 +19,7 @@ public class JobParameterConfiguration {
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
 
-    @Bean
+//    @Bean
     public Job jobParameterJob() {
         return jobBuilderFactory.get("job")
                 .start(jobParameterStep1())
@@ -27,7 +27,7 @@ public class JobParameterConfiguration {
                 .build();
     }
 
-    @Bean
+//    @Bean
     public Step jobParameterStep1() {
         return stepBuilderFactory.get("step1")
                 .tasklet((stepContribution, chunkContext) -> {
@@ -43,7 +43,7 @@ public class JobParameterConfiguration {
                 .build();
     }
 
-    @Bean
+//    @Bean
     public Step jobParameterStep2() {
         return stepBuilderFactory.get("step1")
                 .tasklet((stepContribution, chunkContext) -> {
