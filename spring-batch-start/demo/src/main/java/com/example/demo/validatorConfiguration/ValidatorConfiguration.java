@@ -1,43 +1,29 @@
-package com.example.demo.simpleJobConfiguration;
+package com.example.demo.validatorConfiguration;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.batch.core.*;
+import org.springframework.batch.core.Job;
+import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
-import org.springframework.batch.core.launch.support.RunIdIncrementer;
+import org.springframework.batch.core.job.DefaultJobParametersValidator;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @RequiredArgsConstructor
-public class SimpleJobConfiguration {
+public class ValidatorConfiguration {
 
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
 
 //    @Bean
     public Job job() {
-        return jobBuilderFactory.get("batchJob")
+        return jobBuilderFactory.get("job")
                 .start(step1())
                 .next(step2())
-                .next(step3())
-                .incrementer(new RunIdIncrementer())
-                .validator((jobParameters) -> {
-
-                })
-                .preventRestart()
-                .listener(new JobExecutionListener() {
-                    @Override
-                    public void beforeJob(JobExecution jobExecution) {
-
-                    }
-
-                    @Override
-                    public void afterJob(JobExecution jobExecution) {
-
-                    }
-                })
+                .validator(new CustomJobParameterValidator())
+                .validator(new DefaultJobParametersValidator(new String[]{"name", "date"}, new String[]{"count"}))
                 .build();
     }
 
@@ -59,20 +45,6 @@ public class SimpleJobConfiguration {
                 .tasklet(((stepContribution, chunkContext) -> {
                     System.out.println("=========================");
                     System.out.println(" >> step 2 was executed");
-                    System.out.println("=========================");
-                    return RepeatStatus.FINISHED;
-                }))
-                .build();
-    }
-
-//    @Bean
-    public Step step3() {
-        return stepBuilderFactory.get("step3")
-                .tasklet(((stepContribution, chunkContext) -> {
-                    chunkContext.getStepContext().getStepExecution().setStatus(BatchStatus.FAILED);
-                    stepContribution.setExitStatus(ExitStatus.STOPPED);
-                    System.out.println("=========================");
-                    System.out.println(" >> step 3 was executed");
                     System.out.println("=========================");
                     return RepeatStatus.FINISHED;
                 }))
