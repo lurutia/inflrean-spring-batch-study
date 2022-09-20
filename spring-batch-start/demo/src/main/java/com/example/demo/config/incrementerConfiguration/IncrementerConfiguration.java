@@ -1,4 +1,4 @@
-package com.example.demo.config;
+package com.example.demo.config.incrementerConfiguration;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @RequiredArgsConstructor
-public class PreventRestartConfiguration {
+public class IncrementerConfiguration {
 
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
@@ -21,7 +21,7 @@ public class PreventRestartConfiguration {
         return jobBuilderFactory.get("job")
                 .start(step1())
                 .next(step2())
-                .preventRestart()
+                .incrementer(new CustomJobParameterIncrementer())
                 .build();
     }
 
@@ -41,7 +41,6 @@ public class PreventRestartConfiguration {
     public Step step2() {
         return stepBuilderFactory.get("step2")
                 .tasklet(((stepContribution, chunkContext) -> {
-//                    throw new RuntimeException("step2 was failed");
                     System.out.println("=========================");
                     System.out.println(" >> step 2 was executed");
                     System.out.println("=========================");
