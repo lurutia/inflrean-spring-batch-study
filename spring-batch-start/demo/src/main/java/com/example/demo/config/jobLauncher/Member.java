@@ -1,4 +1,4 @@
-package com.example.demo.jobLauncher;
+package com.example.demo.config.jobLauncher;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
